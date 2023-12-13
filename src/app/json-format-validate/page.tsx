@@ -1,23 +1,17 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import {
-  Button,
-  Box,
-  Code,
-  Flex,
-  Grid,
-  Text,
-  TextArea,
-} from "@radix-ui/themes";
-import { useDebouncedValue } from "foxact/use-debounced-value";
-import CopyButton from "@/components/buttons/copy";
+import { useDebouncedValue } from 'foxact/use-debounced-value';
+import { useEffect, useState } from 'react';
+
+import { Box, Code, Flex, Grid, Text, TextArea } from '@radix-ui/themes';
+
+import CopyButton from '@/components/buttons/copy';
 
 export default function JSONFormatValidate() {
-  const [userInput, setUserInput] = useState("");
+  const [input, setInput] = useState('');
 
-  const debouncedUserInput = useDebouncedValue(userInput, 300, true);
-  const [output, setOutput] = useState("");
+  const debouncedUserInput = useDebouncedValue(input, 300, true);
+  const [output, setOutput] = useState('');
   useEffect(() => {
     try {
       setOutput(JSON.stringify(JSON.parse(debouncedUserInput), null, 2));
@@ -34,8 +28,8 @@ export default function JSONFormatValidate() {
         </Flex>
 
         <TextArea
-          value={userInput}
-          onChange={(e) => setUserInput(e.target.value)}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
           className="h-full"
         />
       </Flex>

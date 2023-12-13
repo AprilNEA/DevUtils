@@ -1,10 +1,12 @@
-"use client";
+'use client';
 
-import { useClipboard } from "foxact/use-clipboard";
-import { toast } from "react-hot-toast";
-import { useCallback } from "react";
-import { Button } from "@radix-ui/themes";
-import clsx from "clsx";
+import clsx from 'clsx';
+import { useClipboard } from 'foxact/use-clipboard';
+import { useCallback } from 'react';
+import { toast } from 'react-hot-toast';
+
+import { ClipboardCopyIcon } from '@radix-ui/react-icons';
+import { Button, IconButton, Text } from '@radix-ui/themes';
 
 const CopyButton = ({
   valueToCopy,
@@ -20,19 +22,22 @@ const CopyButton = ({
     usePromptAsFallback: false,
     // optional. When `window.prompt` is used as a fallback, this text will be shown in the prompt dialog
     promptFallbackText:
-      "Failed to copy to clipboard automatically, please manually copy the text below.",
+      'Failed to copy to clipboard automatically, please manually copy the text below.',
     // optional. Triggers when copy failed and `usePromptAsFallback` is not enabled
     onCopyError(e) {
-      toast("Failed to copy!");
+      toast('Failed to copy!');
     },
   });
 
   return (
     <Button
+      size="1"
+      variant="outline"
       className={clsx(className)}
       onClick={useCallback(() => copy(valueToCopy), [copy, valueToCopy])}
     >
-      {copied ? "Copied" : "Copy"}
+      <ClipboardCopyIcon width="16" height="16" />
+      <Text>{copied ? 'Copied' : 'Copy'}</Text>
     </Button>
   );
 };
