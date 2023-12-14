@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 
 import { Separator, Strong, Text } from '@radix-ui/themes';
 
-import { version } from '@/../package.json';
+import packageMeta from '@/../package.json';
 import meta from '@/app/meta';
 
 import Search from './search';
@@ -65,7 +65,7 @@ export default function Sidebar() {
             <Link href="https://sku.moe" prefetch={true}>
               AprilNEA
             </Link>{' '}
-            (v{version})
+            (v{packageMeta.version})
           </Strong>
         </Text>
       </div>

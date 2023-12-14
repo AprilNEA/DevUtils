@@ -30,7 +30,7 @@
   },
   "include": [
     "next-env.d.ts",
-    "src/window.d.ts",
+    "src/tauri-api.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"

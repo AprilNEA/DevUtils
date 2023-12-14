@@ -6,8 +6,6 @@ import { useEffect, useState } from 'react';
 import {
   Box,
   Button,
-  Card,
-  Code,
   Flex,
   Grid,
   Popover,
@@ -20,10 +18,13 @@ import CopyButton from '@/components/buttons/copy';
 import ToolBar from '@/components/tool-bar';
 import { SettingIcon } from '@/icons';
 import { useAppStore } from '@/store';
+import { isTauri } from '@/utils';
 
 async function validateJson(stringToValidate: string): Promise<string> {
-  if (window.__TAURI__ !== undefined) {
-    return await window.__TAURI__.invoke('validate_json', { stringToValidate });
+  if (isTauri()) {
+    return await (
+      await import('@tauri-apps/api')
+    ).invoke('validate_json', { stringToValidate });
   }
   try {
     return JSON.stringify(JSON.parse(stringToValidate), null, 2);

@@ -1,6 +1,5 @@
-'use client';
-
 import clsx from 'clsx';
+import type { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 import { Inconsolata } from 'next/font/google';
 
@@ -9,7 +8,6 @@ import '@radix-ui/themes/styles.css';
 
 import Sidebar from '@/components/sidebar';
 import '@/globals.css';
-import { isTauri } from '@/utils';
 
 const inconsolata = Inconsolata({
   subsets: ['latin'],
@@ -24,6 +22,10 @@ const Toaster = dynamic(
   { ssr: false },
 );
 
+export const metadata: Metadata = {
+  title: 'DevUtils',
+  description: 'All-in-one Toolbox for Developers',
+};
 export default function RootLayout({
   children,
 }: {
@@ -31,17 +33,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="h-full">
-      <head>
-        <meta name="description" content="All-in-one Toolbox for Developers" />
-        <title>DevUtils</title>
-      </head>
       <body className={clsx(inconsolata.className, 'h-full')}>
-        <Theme
-          accentColor="gray"
-          grayColor="slate"
-          className="h-full"
-          scaling={isTauri() ? '90%' : '100%'}
-        >
+        <Theme accentColor="gray" grayColor="slate" className="h-full">
           <div className="h-full flex flex-row">
             <Sidebar />
             <Separator orientation="vertical" size="4" />

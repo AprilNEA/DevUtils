@@ -13,3 +13,10 @@ declare interface Window {
     ): Promise<TauriCommands[K]['result']>;
   };
 }
+
+declare module '@tauri-apps/api' {
+  declare function invoke<K extends keyof TauriCommands>(
+    command: K,
+    args: TauriCommands[K]['params'],
+  ): Promise<TauriCommands[K]['result']>;
+}
