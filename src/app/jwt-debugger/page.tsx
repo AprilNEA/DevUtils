@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { Card, Flex, Grid, Separator, Text, TextArea } from '@radix-ui/themes';
 
 import CopyButton from '@/components/buttons/copy';
+import ToolBar from '@/components/tool-bar';
 
 interface JWT {
   header: any;
@@ -41,9 +42,10 @@ export default function JWTDebugger() {
 
   return (
     <Grid className="h-full" columns="2" gap="3" width="auto">
-      <Flex direction="column" className="h-full">
-        <Flex>
+      <Flex direction="column" className="h-full" gap="2">
+        <Flex direction="row" justify="start" align="center" gap="2">
           <Text>Input</Text>
+          <ToolBar input={input} setInput={setInput} />
         </Flex>
 
         <TextArea
@@ -52,7 +54,7 @@ export default function JWTDebugger() {
           className="h-full"
         />
       </Flex>
-      <Flex direction="column" className="h-full gap-y-2">
+      <Flex direction="column" className="h-full" gap="2">
         <Flex direction="row" justify="between" align="center">
           <Text>Header: </Text>
           <CopyButton valueToCopy={output.header} />

@@ -17,6 +17,7 @@ import {
 } from '@radix-ui/themes';
 
 import CopyButton from '@/components/buttons/copy';
+import ToolBar from '@/components/tool-bar';
 import { SettingIcon } from '@/icons';
 import { useAppStore } from '@/store';
 
@@ -79,7 +80,10 @@ export default function JSONFormatValidate() {
     <Grid className="h-full" columns="2" gap="3" width="auto">
       <Flex direction="column" className="h-full gap-y-2">
         <Flex direction="row" justify="between" align="center">
-          <Text>Input</Text>
+          <Flex direction="row" justify="start" align="center" gap="2">
+            <Text>Input</Text>
+            <ToolBar input={input} setInput={setInput} />
+          </Flex>
           <Setting />
         </Flex>
 

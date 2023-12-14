@@ -12,6 +12,7 @@
     "@radix-ui/react-icons": "^1.3.0",
     "@radix-ui/themes": "^2.0.2",
     "@svgr/webpack": "^8.1.0",
+    "@tauri-apps/api": "^1.5.2",
     "foxact": "^0.2.27",
     "jotai": "^2.6.0",
     "next": "14.0.4",
