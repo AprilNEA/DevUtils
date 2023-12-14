@@ -7,7 +7,7 @@ const meta: {
   };
 } = {
   'json-format-validate': {
-    title: 'JSON Format Validate',
+    title: 'JSON Format/Validate',
     icon: JsonIcon,
   },
   'jwt-debugger': {

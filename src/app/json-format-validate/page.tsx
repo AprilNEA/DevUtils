@@ -3,28 +3,84 @@
 import { useDebouncedValue } from 'foxact/use-debounced-value';
 import { useEffect, useState } from 'react';
 
-import { Box, Code, Flex, Grid, Text, TextArea } from '@radix-ui/themes';
+import {
+  Box,
+  Button,
+  Card,
+  Code,
+  Flex,
+  Grid,
+  Popover,
+  Text,
+  TextArea,
+  TextField,
+} from '@radix-ui/themes';
 
 import CopyButton from '@/components/buttons/copy';
+import { SettingIcon } from '@/icons';
+import { useAppStore } from '@/store';
+
+async function validateJson(stringToValidate: string): Promise<string> {
+  if (window.__TAURI__ !== undefined) {
+    return await window.__TAURI__.invoke('validate_json', { stringToValidate });
+  }
+  try {
+    return JSON.stringify(JSON.parse(stringToValidate), null, 2);
+  } catch (e) {
+    return JSON.stringify(e, null, 2);
+  }
+}
+
+function Setting() {
+  const { delay, setDelay } = useAppStore();
+  return (
+    <Popover.Root>
+      <Popover.Trigger>
+        <Button size="1" variant="outline">
+          <SettingIcon className="h-[16px] w-[16px]" />
+        </Button>
+      </Popover.Trigger>
+      <Popover.Content>
+        <Flex gap="3">
+          <Box grow="1">
+            <Flex direction="row" justify="start" align="center" gap="2">
+              <Text as="label" size="2">
+                <Text>Delay: </Text>
+              </Text>
+              <TextField.Input
+                value={delay}
+                onChange={(e) => {
+                  const v = parseInt(e.target.value);
+                  setDelay(v);
+                }}
+              />
+            </Flex>
+            <Popover.Close>
+              <Button size="1">Comment</Button>
+            </Popover.Close>
+          </Box>
+        </Flex>
+      </Popover.Content>
+    </Popover.Root>
+  );
+}
 
 export default function JSONFormatValidate() {
+  const { delay } = useAppStore();
   const [input, setInput] = useState('');
-
-  const debouncedUserInput = useDebouncedValue(input, 300, true);
   const [output, setOutput] = useState('');
+
+  const debouncedInput = useDebouncedValue(input, delay, true);
   useEffect(() => {
-    try {
-      setOutput(JSON.stringify(JSON.parse(debouncedUserInput), null, 2));
-    } catch (e) {
-      setOutput(JSON.stringify(e));
-    }
-  }, [debouncedUserInput]);
+    validateJson(debouncedInput).then((result) => setOutput(result));
+  }, [debouncedInput]);
 
   return (
     <Grid className="h-full" columns="2" gap="3" width="auto">
-      <Flex direction="column" className="h-full">
-        <Flex>
+      <Flex direction="column" className="h-full gap-y-2">
+        <Flex direction="row" justify="between" align="center">
           <Text>Input</Text>
+          <Setting />
         </Flex>
 
         <TextArea
@@ -33,14 +89,12 @@ export default function JSONFormatValidate() {
           className="h-full"
         />
       </Flex>
-      <Flex direction="column" className="h-full">
+      <Flex direction="column" className="h-full gap-y-2">
         <Flex direction="row" justify="between" align="center">
-          <Text>Input</Text>
+          <Text>Output</Text>
           <CopyButton valueToCopy={output} />
         </Flex>
-        <Box height="100%">
-          <Code>{output}</Code>
-        </Box>
+        <TextArea className="grow whitespace-pre-wrap" value={output} />
       </Flex>
     </Grid>
   );

@@ -26,7 +26,7 @@ export default function Sidebar() {
       {Object.keys(meta).map((key) => {
         const v = meta[key];
         return (
-          <Link href={key} key={key} className="w-full px-2">
+          <Link href={key} key={key} prefetch={true} className="w-full px-2">
             <div
               className={clsx(
                 'w-full px-2 py-1',
