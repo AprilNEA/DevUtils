@@ -50,12 +50,12 @@ export default function Sidebar() {
                 className={clsx(
                   'w-full px-2 py-1',
                   pathname.slice(1) === key
-                    ? 'border-gray-300 bg-gray-100 shadow-md'
-                    : 'border-gray-200 shadow-sm',
-                  'border border-solid  rounded-md ',
+                    ? 'border-slate-300 bg-slate-100 shadow'
+                    : 'border-slate-250 shadow-sm',
+                  'border border-solid rounded-md bg-white',
                   'flex flex-row justify-start items-center gap-x-1',
                   'transition-colors duration-200 ease-in-out',
-                  'hover:bg-gray-200 hover:border-gray-200 hover:rounded-md',
+                  'hover:bg-gray-300 hover:border-gray-300 hover:rounded-md',
                 )}
               >
                 <v.icon className="flex-none h-2/3 mr-2" />

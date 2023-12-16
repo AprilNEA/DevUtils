@@ -11,7 +11,7 @@ type LabelInputProps = InputProps & {
   label: string;
 };
 
-const inputClasses = 'shadow';
+const inputClasses = 'shadow border border-[#e3e6eb]';
 
 export function Input({
   icon,

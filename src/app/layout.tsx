@@ -26,6 +26,7 @@ export const metadata: Metadata = {
   title: 'DevUtils',
   description: 'All-in-one Toolbox for Developers',
 };
+
 export default function RootLayout({
   children,
 }: {
@@ -33,7 +34,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="h-full">
-      <body className={clsx(inconsolata.className, 'h-full')}>
+      <body className={clsx(inconsolata.className, 'h-full bg-[#f3f5f8]')}>
         <Theme accentColor="gray" grayColor="slate" className="h-full">
           <div className="h-full flex flex-row">
             <Sidebar />

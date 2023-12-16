@@ -4,13 +4,15 @@ import { Button, Flex } from '@radix-ui/themes';
 
 import { readClipBoard } from '@/utils';
 
-export default function ToolBar({
+export default function ToolBar<T = string | number>({
   input,
   setInput,
+  clear,
   sample,
 }: {
-  input: string;
+  input: T;
   setInput: (v: string) => void;
+  clear?: () => void;
   sample?: string;
 }) {
   return (
@@ -27,7 +29,7 @@ export default function ToolBar({
           Sample
         </Button>
       )}
-      <Button size="1" variant="outline" onClick={() => setInput('')}>
+      <Button size="1" variant="outline" onClick={clear}>
         Clear
       </Button>
     </Flex>

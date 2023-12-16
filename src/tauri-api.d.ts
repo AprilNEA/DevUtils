@@ -1,6 +1,6 @@
 interface TauriCommands {
   validate_json: {
-    params: { stringToValidate: string };
+    params: { stringToValidate: string; path?: string };
     result: string;
   };
 }
