@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "tauri dev",
+    "dev": "next dev",
     "dev:web": "next dev",
     "dev:app": "tauri dev",
-    "build": "tauri build",
+    "build": "next build",
     "build:web": "next build",
     "build:app": "tauri build",
     "start": "next start",
