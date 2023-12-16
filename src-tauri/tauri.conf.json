@@ -18,6 +18,9 @@
         "all": true,
         "writeText": true,
         "readText": true
+      },
+      "window": {
+        "setAlwaysOnTop": true
       }
     },
     "bundle": {
@@ -61,10 +64,12 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 600,
+        "height": 800,
+        "minHeight": 600,
         "resizable": true,
         "title": "DevUtils",
-        "width": 800
+        "width": 1200,
+        "minWidth": 700
       }
     ]
   }

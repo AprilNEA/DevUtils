@@ -561,6 +561,7 @@ dependencies = [
 name = "devutils"
 version = "0.1.0"
 dependencies = [
+ "jsonpath_lib",
  "serde",
  "serde_json",
  "tauri",
@@ -1401,6 +1402,17 @@ dependencies = [
  "serde_json",
  "thiserror",
  "treediff",
+]
+
+[[package]]
+name = "jsonpath_lib"
+version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "eaa63191d68230cccb81c5aa23abd53ed64d83337cacbb25a7b8c7979523774f"
+dependencies = [
+ "log",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]
@@ -2331,6 +2343,7 @@ version = "1.0.108"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3d1c7e3eac408d115102c4c24ad393e0821bb3a5df4d506a80f85f7a742a526b"
 dependencies = [
+ "indexmap 2.1.0",
  "itoa 1.0.10",
  "ryu",
  "serde",
