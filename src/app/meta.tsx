@@ -15,7 +15,7 @@ type metaProps = {
 };
 
 const meta: {
-  [key in Utils]: metaProps;
+  [key in Utils as string]: metaProps;
 } = {
   'unix-time-converter': {
     title: 'Unix Time Converter',

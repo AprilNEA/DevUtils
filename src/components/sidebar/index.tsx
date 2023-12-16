@@ -9,7 +9,7 @@ import { useMemo } from 'react';
 import { Separator, Strong, Text } from '@radix-ui/themes';
 
 import packageMeta from '@/../package.json';
-import meta from '@/app/meta';
+import meta, { Utils } from '@/app/meta';
 
 import Search, { searchAtom } from './search';
 
