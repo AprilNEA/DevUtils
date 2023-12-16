@@ -19,11 +19,16 @@ export default function Sidebar() {
 
   const renderedMeta = useMemo(() => {
     return Object.keys(meta).reduce((result, key) => {
-      if (key.includes(search) || meta[key].title.includes(search)) {
+      if (
+        key.includes(search) ||
+        meta[key].name.includes(search) ||
+        (meta[key]?.title ?? '').includes(search) ||
+        (meta[key]?.description ?? '').includes(search)
+      ) {
         (result as any)[key] = meta[key];
       }
       return result;
-    }, {});
+    }, {}) as typeof meta;
   }, [search, meta]);
 
   return (
@@ -42,36 +47,39 @@ export default function Sidebar() {
           'flex flex-col items-start justify-start gap-y-2',
         )}
       >
-        {Object.keys(renderedMeta).map((key) => {
-          const v = meta[key];
-          return (
-            <Link href={key} key={key} prefetch={true} className="w-full px-2">
-              <div
-                className={clsx(
-                  'w-full px-2 py-1',
-                  pathname.slice(1) === key
-                    ? 'border-slate-300 bg-slate-100 shadow'
-                    : 'border-slate-250 shadow-sm',
-                  'border border-solid rounded-md bg-white',
-                  'flex flex-row justify-start items-center gap-x-1',
-                  'transition-colors duration-200 ease-in-out',
-                  'hover:bg-gray-300 hover:border-gray-300 hover:rounded-md',
-                )}
+        {Object.entries(renderedMeta).map(([key, value]) => (
+          <Link href={key} key={key} prefetch={true} className="w-full px-2">
+            <div
+              className={clsx(
+                'w-full px-2 py-1',
+                pathname.slice(1) === key
+                  ? 'border-slate-300 bg-slate-100 shadow'
+                  : 'border-slate-250 shadow-sm',
+                'border border-solid rounded-md bg-white',
+                'flex flex-row justify-start items-center gap-x-1',
+                'transition-colors duration-200 ease-in-out',
+                'hover:bg-gray-300 hover:border-gray-300 hover:rounded-md ',
+              )}
+            >
+              <value.icon
+                style={{
+                  height: '24px',
+                  width: '24px',
+                }}
+                className="flex-none mr-2"
+              />
+              <Text
+                size={{
+                  initial: '1',
+                  md: '2',
+                }}
+                className="truncate"
               >
-                <v.icon className="flex-none h-2/3 mr-2" />
-                <Text
-                  size={{
-                    initial: '1',
-                    md: '2',
-                  }}
-                  className="truncate"
-                >
-                  {v.title}
-                </Text>
-              </div>
-            </Link>
-          );
-        })}
+                {value.name}
+              </Text>
+            </div>
+          </Link>
+        ))}
       </div>
       <Separator size="4" />
       <div className="w-full px-2 py-1 ">

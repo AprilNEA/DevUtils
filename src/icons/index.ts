@@ -5,3 +5,4 @@ export { default as JwtIcon } from './jwt.svg';
 export { default as PinIcon } from './pin.svg';
 export { default as PushpinIcon } from './pushpin.svg';
 export { default as SettingIcon } from './settings.svg';
+export { default as ConversionIcon } from './conversion.svg';

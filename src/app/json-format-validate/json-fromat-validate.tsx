@@ -1,88 +1,27 @@
 'use client';
 
 import { useDebouncedValue } from 'foxact/use-debounced-value';
-import { JSONPath } from 'jsonpath-plus';
+import { useAtom } from 'jotai';
 import { useEffect, useState } from 'react';
 
 import {
-  Box,
-  Button,
   Flex,
   Grid,
-  Popover,
+  Select,
   Text,
   TextArea,
   TextField,
 } from '@radix-ui/themes';
 
+import Setting, { delayAtom } from '@/app/setting';
 import CopyButton from '@/components/buttons/copy';
 import ToolBar from '@/components/tool-bar';
-import { SettingIcon } from '@/icons';
-import { useAppStore } from '@/store';
-import { isTauri } from '@/utils';
+import { StringType, validateJson } from '@/utils/json';
 
-async function validateJson(
-  stringToValidate: string,
-  jsonpath?: string,
-): Promise<string> {
-  if (isTauri()) {
-    return await (
-      await import('@tauri-apps/api')
-    ).invoke('validate_json', {
-      stringToValidate,
-      path: !!jsonpath ? jsonpath : undefined, // empty string should be undefined
-    });
-  }
-  try {
-    const parsed = JSON.parse(stringToValidate);
-    const result = jsonpath
-      ? JSONPath({ path: jsonpath, json: parsed })
-      : parsed;
-    return JSON.stringify(result, null, 2);
-  } catch (e) {
-    if (e instanceof SyntaxError) {
-      return e.message;
-    }
-    return 'Unknown error';
-  }
-}
+export function JSONFormatValidate() {
+  const [delay] = useAtom(delayAtom);
 
-function Setting() {
-  const { delay, setDelay } = useAppStore();
-  return (
-    <Popover.Root>
-      <Popover.Trigger>
-        <Button size="1" variant="outline">
-          <SettingIcon className="h-[16px] w-[16px]" />
-        </Button>
-      </Popover.Trigger>
-      <Popover.Content>
-        <Flex gap="3">
-          <Box grow="1">
-            <Flex direction="row" justify="start" align="center" gap="2">
-              <Text as="label" size="2">
-                <Text>Delay: </Text>
-              </Text>
-              <TextField.Input
-                value={delay}
-                onChange={(e) => {
-                  const v = parseInt(e.target.value);
-                  setDelay(v);
-                }}
-              />
-            </Flex>
-            <Popover.Close>
-              <Button size="1">Comment</Button>
-            </Popover.Close>
-          </Box>
-        </Flex>
-      </Popover.Content>
-    </Popover.Root>
-  );
-}
-
-export default function JSONFormatValidate() {
-  const { delay } = useAppStore();
+  const [stringType, setStringType] = useState(StringType.JSONString);
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [outputError, setOutputError] = useState('');
@@ -93,8 +32,10 @@ export default function JSONFormatValidate() {
   const debouncedJsonpath = useDebouncedValue(jsonpath, delay, true);
 
   useEffect(() => {
-    validateJson(debouncedInput, jsonpath).then((result) => setOutput(result));
-  }, [debouncedInput, debouncedJsonpath]);
+    validateJson(debouncedInput, stringType, jsonpath).then((result) =>
+      setOutput(result),
+    );
+  }, [debouncedInput, stringType, debouncedJsonpath]);
 
   return (
     <Grid className="h-full" columns="2" gap="3" width="auto">
@@ -102,7 +43,25 @@ export default function JSONFormatValidate() {
         <Flex direction="row" justify="between" align="center">
           <Flex direction="row" justify="start" align="center" gap="2">
             <Text>Input</Text>
-            <ToolBar input={input} setInput={setInput} />
+            <Select.Root
+              size="1"
+              onValueChange={(v) => setStringType(v as StringType)}
+              defaultValue={StringType.JSONString}
+            >
+              <Select.Trigger />
+              <Select.Content>
+                {Object.entries(StringType).map(([key, value]) => (
+                  <Select.Item key={key} value={value}>
+                    {value}
+                  </Select.Item>
+                ))}
+              </Select.Content>
+            </Select.Root>
+            <ToolBar
+              input={input}
+              setInput={setInput}
+              clear={() => setInput('{}')}
+            />
           </Flex>
           <Setting />
         </Flex>
@@ -122,6 +81,7 @@ export default function JSONFormatValidate() {
           color="red"
           className="grow whitespace-pre-wrap"
           value={output}
+          onChange={(e) => setInput(e.target.value)}
         />
         <TextField.Input
           placeholder="JSON Path: (e.g., $.store.book[0].title)"

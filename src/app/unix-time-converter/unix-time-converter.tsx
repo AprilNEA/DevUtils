@@ -2,8 +2,7 @@
 
 import { useDebouncedValue } from 'foxact/use-debounced-value';
 import moment from 'moment';
-import { useEffect, useState } from 'react';
-import { proxy, useSnapshot } from 'valtio';
+import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 
 import { Card, Flex, Grid, Separator, Text, TextField } from '@radix-ui/themes';
 
@@ -11,27 +10,26 @@ import CopyButton from '@/components/buttons/copy';
 import { Input, LabelInput } from '@/components/input';
 import ToolBar from '@/components/tool-bar';
 
-const state = proxy({
-  date: moment(),
-  get timestamp(): string {
-    return this.date.toString();
-  },
-  get utc(): string {
-    return this.date.toISOString();
-  },
-  get local(): string {
-    return this.date.toLocaleString();
-  },
-  get unix(): number {
-    return this.date.unix();
-  },
-  get relative(): string {
-    return moment(this.date).fromNow();
-  },
-});
-
 export default function UnixTimeConverter() {
-  const snap = useSnapshot(state, { sync: true });
+  const [date, _setDate] = useState(moment());
+
+  const property = useMemo(
+    () => ({
+      timestamp: date.unix(),
+      local: date.toLocaleString(),
+      utc: date.toISOString(),
+      unix: date.unix(),
+      relative: moment(date).fromNow(),
+      weekOfYear: date.weeks(),
+      dayOfYear: date.dayOfYear(),
+      weekday: date.weekday(),
+    }),
+    [date],
+  );
+
+  const setDate = (e: ChangeEvent<HTMLInputElement>) => {
+    _setDate(moment(e.target.value));
+  };
 
   return (
     <Flex
@@ -44,62 +42,62 @@ export default function UnixTimeConverter() {
       <Flex direction="row" justify="start" align="start" gap="2">
         <Text>Input</Text>
         <ToolBar
-          input={snap.timestamp}
-          setInput={(v) => {
-            state.date = moment(v);
-          }}
-          clear={() => (state.date = moment())}
+          input={property.timestamp}
+          setInput={(e) => _setDate(moment(e))}
+          clear={() => _setDate(moment())}
         />
       </Flex>
 
       <div>
-        <Input
-          value={snap.date.unix()}
-          onChange={(e) => (state.date = moment(e.target.value))}
-          className="w-48"
-        />
+        <Input value={property.timestamp} onChange={setDate} className="w-48" />
       </div>
       <Separator size="4" />
       <Flex direction="row" gap="4">
         <Flex direction="column" gap="2">
           <LabelInput
             label="Local"
-            value={snap.local}
-            onChange={(e) => {
-              state.date = moment(e.target.value);
-            }}
+            value={property.local}
+            onChange={setDate}
             className="w-72"
           />
           <LabelInput
             label="UTC (ISO 8601)"
-            value={snap.utc}
-            onChange={(e) => {
-              state.date = moment(e.target.value);
-            }}
+            value={property.utc}
+            onChange={setDate}
             className="w-72"
           />
-          <LabelInput label="Relative" value={snap.relative} className="w-72" />
-          <LabelInput label="Unix time" value={snap.unix} className="w-72" />
+          <LabelInput
+            label="Relative"
+            value={property.relative}
+            className="w-72"
+          />
+          <LabelInput
+            label="Unix time"
+            value={property.unix}
+            className="w-72"
+          />
         </Flex>
         <Flex direction="column" gap="2">
           <LabelInput
             label="Weekday"
-            value={snap.date.weekday()}
+            value={property.weekday}
+            onChange={(e) => {}}
             className="w-24"
           />
           <LabelInput
             label="Day of year"
-            value={snap.date.dayOfYear()}
+            value={property.dayOfYear}
             onChange={(e) => {
-              state.date.set('dayOfYear', parseInt(e.target.value));
+              date.set('dayOfYear', parseInt(e.target.value));
             }}
             className="w-24"
           />
           <LabelInput
             label="Week of year"
-            value={snap.date.weeksInYear()}
+            value={property.weekOfYear}
             onChange={(e) => {
-              state.date.set('weekYears', parseInt(e.target.value));
+              date.set('weeks', parseInt(e.target.value));
+              _setDate(date.clone());
             }}
             className="w-24"
           />
