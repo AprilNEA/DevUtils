@@ -2,6 +2,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use serde_json::{Value, Error};
+use jsonpath_lib;
 
 #[tauri::command]
 fn greet(name: &str) -> String {
@@ -13,9 +14,19 @@ fn string_to_json(input: &str) -> Result<Value, Error> {
 }
 
 #[tauri::command]
-fn validate_json(string_to_validate: &str) -> String {
+fn validate_json(string_to_validate: &str, path: Option<&str>) -> String {
     match string_to_json(string_to_validate) {
-        Ok(json) => serde_json::to_string_pretty(&json).unwrap(),
+        Ok(json) => {
+            match path {
+                Some(p) => {
+                    match jsonpath_lib::select(&json, p) {
+                        Ok(result) => serde_json::to_string_pretty(&result).unwrap(),
+                        Err(e) => format!("Invalid path: {}", e)
+                    }
+                }
+                None => serde_json::to_string_pretty(&json).unwrap(),
+            }
+        }
         Err(e) => format!("Invalid: {}", e)
     }
 }
