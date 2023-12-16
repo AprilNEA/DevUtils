@@ -37,8 +37,8 @@
         "icons/icon.ico",
         "icons/icon.png"
       ],
-      "identifier": "com.tauri.dev",
-      "longDescription": "",
+      "identifier": "moe.sku.utils",
+      "longDescription": "All-in-one Toolbox for Developers",
       "macOS": {
         "entitlements": null,
         "exceptionDomain": "",
@@ -47,7 +47,7 @@
         "signingIdentity": null
       },
       "resources": [],
-      "shortDescription": "",
+      "shortDescription": "All-in-one Toolbox for Developers",
       "targets": "all",
       "windows": {
         "certificateThumbprint": null,
