@@ -18,6 +18,10 @@
 
 </div>
 
+## Showcase
+
+![showcase-v0.0.1-beta.png](https://s2.loli.net/2023/12/17/wGMhBPiOAgfvX6c.png)
+
 ## Tools
 
 | Tools Name                  | JavaScript Implementation | Rust Implementation             |
