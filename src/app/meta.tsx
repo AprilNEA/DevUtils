@@ -1,12 +1,20 @@
 import { Metadata } from 'next';
 
-import { ClockIcon, ConversionIcon, JsonIcon, JwtIcon } from '@/icons';
+import {
+  Base64Icon,
+  Base64ImageIcon,
+  ClockIcon,
+  ConversionIcon,
+  JsonIcon,
+  JwtIcon,
+} from '@/icons';
 
 export enum Utils {
   // CurlToCode = 'curl-to-code',
   JSONFormatValidate = 'json-format-validate',
   UnixTimeConverter = 'unix-time-converter',
   Base64StringEncodeDecode = 'base64-string-encode-decode',
+  Base64ImageEncodeDecode = 'base64-image-encode-decode',
   jsonYamlTomlConverter = 'json-yaml-toml-convert',
   JwtDebugger = 'jwt-debugger',
 }
@@ -29,7 +37,7 @@ const meta: {
     name: 'JSON Format/Validate',
     icon: JsonIcon,
     description:
-      'Efficient, user-friendly tool for formatting, validating, and optimizing JSON data.',
+      'Efficient, user-friendly tool for formatting, validating, and optimizing JSON or JSON-like(Python-Dict) data.',
   },
   [Utils.UnixTimeConverter]: {
     name: 'Unix Time Converter',
@@ -39,9 +47,15 @@ const meta: {
   },
   [Utils.Base64StringEncodeDecode]: {
     name: 'Base64 String Encode/Decode',
-    icon: ClockIcon,
+    icon: Base64Icon,
     description:
       'Efficient tool for encoding and decoding strings in Base64 format.',
+  },
+  [Utils.Base64ImageEncodeDecode]: {
+    name: 'Base64 Image Encode/Decode',
+    icon: Base64ImageIcon,
+    description:
+      'Efficient tool for encoding and decoding strings in Base64 Image format.',
   },
   [Utils.jsonYamlTomlConverter]: {
     name: 'JSON ↔ YAML ↔ TOML',
