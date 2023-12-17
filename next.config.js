@@ -9,15 +9,6 @@ const nextConfig = {
       test: /\.svg$/,
       use: ['@svgr/webpack'],
     });
-    config.resolve.fallback = {
-      // url: require.resolve('url/'),
-      // path: require.resolve('path-browserify'),
-      fs: false,
-    };
-    config.experiments = {
-      layers: true,
-      topLevelAwait: true,
-    };
     return config;
   },
 };

@@ -33,10 +33,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="h-full">
+    <html lang="en">
       <body className={clsx(inconsolata.className, 'h-full bg-[#f3f5f8]')}>
-        <Theme accentColor="gray" grayColor="slate" className="h-full">
-          <div className="h-full flex flex-row">
+        <Theme accentColor="gray" grayColor="slate">
+          <div className="h-screen flex flex-row">
             <Sidebar />
             <Separator orientation="vertical" size="4" />
             <div className="grow p-4">{children}</div>

@@ -2,7 +2,7 @@
 
 import { useDebouncedValue } from 'foxact/use-debounced-value';
 import { useAtom } from 'jotai';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import {
   Flex,
@@ -15,6 +15,7 @@ import {
 
 import Setting, { delayAtom } from '@/app/setting';
 import CopyButton from '@/components/buttons/copy';
+import CodeEditor from '@/components/code-editor';
 import ToolBar from '@/components/tool-bar';
 import {
   Json2Toml,
@@ -37,9 +38,15 @@ export function JsonYamlTomlConvert() {
   // debounce input to delay update
   const debouncedChanged = useDebouncedValue(changed, delay, true);
 
+  const onChange = useCallback((v: string) => {
+    setJson(v);
+    setChanged('json');
+  }, []);
+
   useEffect(() => {
+    setChanged(undefined);
     try {
-      switch (changed) {
+      switch (debouncedChanged) {
         case 'json':
           const parsed = JSON.parse(json);
           setYaml(Json2Yaml(parsed));
@@ -57,7 +64,6 @@ export function JsonYamlTomlConvert() {
           break;
       }
     } catch (e) {}
-    setChanged(undefined);
   }, [debouncedChanged]);
 
   return (
@@ -69,18 +75,25 @@ export function JsonYamlTomlConvert() {
             <ToolBar
               input={json}
               setInput={setJson}
-              clear={() => setJson('{}')}
+              clear={() => {
+                setJson('');
+                setToml('');
+                setYaml('');
+              }}
             />
           </Flex>
         </Flex>
 
-        <TextArea
+        <CodeEditor
           value={json}
-          onChange={(e) => {
-            setJson(e.target.value);
-            setChanged('json');
-          }}
-          className="h-full"
+          language="json"
+          onChange={useCallback<React.ChangeEventHandler<HTMLTextAreaElement>>(
+            (e) => {
+              setJson(e.target.value);
+              setChanged('json');
+            },
+            [],
+          )}
         />
       </Flex>
       <Flex direction="column" className="h-full gap-y-2">
@@ -88,13 +101,16 @@ export function JsonYamlTomlConvert() {
           <Text>YAML</Text>
           <CopyButton valueToCopy={yaml} />
         </Flex>
-        <TextArea
-          className="grow whitespace-pre-wrap"
+        <CodeEditor
           value={yaml}
-          onChange={(e) => {
-            setYaml(e.target.value);
-            setChanged('yaml');
-          }}
+          language="yaml"
+          onChange={useCallback<React.ChangeEventHandler<HTMLTextAreaElement>>(
+            (e) => {
+              setYaml(e.target.value);
+              setChanged('yaml');
+            },
+            [],
+          )}
         />
       </Flex>
       <Flex direction="column" className="h-full gap-y-2">
@@ -102,13 +118,16 @@ export function JsonYamlTomlConvert() {
           <Text>TOML</Text>
           <CopyButton valueToCopy={toml} />
         </Flex>
-        <TextArea
-          className="grow whitespace-pre-wrap"
+        <CodeEditor
           value={toml}
-          onChange={(e) => {
-            setToml(e.target.value);
-            setChanged('toml');
-          }}
+          language="toml"
+          onChange={useCallback<React.ChangeEventHandler<HTMLTextAreaElement>>(
+            (e) => {
+              setToml(e.target.value);
+              setChanged('toml');
+            },
+            [],
+          )}
         />
       </Flex>
     </Grid>
