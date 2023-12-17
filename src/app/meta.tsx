@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 import {
   Base64Icon,
   Base64ImageIcon,
+  ChipIcon,
   ClockIcon,
   ConversionIcon,
   JsonIcon,
@@ -13,6 +14,7 @@ export enum Utils {
   // CurlToCode = 'curl-to-code',
   JSONFormatValidate = 'json-format-validate',
   UnixTimeConverter = 'unix-time-converter',
+  GptTokenizer = 'gpt-tokenizer',
   Base64StringEncodeDecode = 'base64-string-encode-decode',
   Base64ImageEncodeDecode = 'base64-image-encode-decode',
   jsonYamlTomlConverter = 'json-yaml-toml-convert',
@@ -44,6 +46,11 @@ const meta: {
     icon: ClockIcon,
     description:
       'Quick, accurate tool for converting Unix time to human-readable dates.',
+  },
+  [Utils.GptTokenizer]: {
+    name: 'GPT Tokenizer',
+    icon: ChipIcon,
+    description: '',
   },
   [Utils.Base64StringEncodeDecode]: {
     name: 'Base64 String Encode/Decode',

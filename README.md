@@ -20,16 +20,19 @@
 
 ## Showcase
 
-![showcase-v0.0.1-beta.png](https://s2.loli.net/2023/12/17/wGMhBPiOAgfvX6c.png)
+![showcase-v0.0.1-beta+2.png.png](https://s2.loli.net/2023/12/18/AokIGhuVjtMm6ZH.png)
+
+![showcase-gpt-tokenizer-v0.0.1-beta+2.png](https://s2.loli.net/2023/12/18/9jxAtUDQFYagZRn.png)
 
 ## Tools
 
-| Tools Name                  | JavaScript Implementation | Rust Implementation             |
-|-----------------------------|---------------------------|---------------------------------|
-| Base64 String Encode/Decode | :white_check_mark:        |                                 |
-| Base64 Image Encode/Decode  | :white_check_mark:        |                                 |
-| JSON Format/Validate        | :white_check_mark: `JSON` | :white_check_mark: `serde_json` |
-| JSON ↔ YAML ↔ TOML          | :white_check_mark:        |                                 |
-| JWT Debugger                | :white_check_mark:        |                                 |
-| Unix Time Converter         | :white_check_mark:        |                                 |
+| Tools Name                  | JavaScript Implementation          | Rust Implementation             |
+|-----------------------------|------------------------------------|---------------------------------|
+| Base64 String Encode/Decode | :white_check_mark:                 |                                 |
+| Base64 Image Encode/Decode  | :white_check_mark:                 |                                 |
+| GPT Tokenizer               | :white_check_mark: `gpt-tokenizer` | :o: `tiktoken-rs`               |
+| JSON Format/Validate        | :white_check_mark: `JSON`          | :white_check_mark: `serde_json` |
+| JSON ↔ YAML ↔ TOML          | :white_check_mark:                 |                                 |
+| JWT Debugger                | :white_check_mark:                 |                                 |
+| Unix Time Converter         | :white_check_mark:                 |                                 |
 

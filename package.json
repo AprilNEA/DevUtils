@@ -21,6 +21,7 @@
     "@uiw/react-textarea-code-editor": "^3.0.2",
     "client-only": "^0.0.1",
     "foxact": "^0.2.27",
+    "gpt-tokenizer": "^2.1.2",
     "jotai": "^2.6.0",
     "js-yaml": "^4.1.0",
     "jsonpath-plus": "^7.2.0",
