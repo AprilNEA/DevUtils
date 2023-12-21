@@ -38,6 +38,7 @@ export default function Category({
         {Object.values(category.utils).map((utils) => {
           return (
             <div
+              key={utils.name}
               className={clsx(
                 'flex flex-col justify-center items-center gap-4',
                 'p-4 bg-white border shadow rounded-md',

@@ -20,7 +20,7 @@
 
 ## Showcase
 
-![showcase-v0.0.1-beta+2.png.png](https://s2.loli.net/2023/12/18/AokIGhuVjtMm6ZH.png)
+![showcase-v0.1.1-beta.png](https://s2.loli.net/2023/12/22/R5gLHlsfchtMETC.png)
 
 ![showcase-gpt-tokenizer-v0.0.1-beta+2.png](https://s2.loli.net/2023/12/18/9jxAtUDQFYagZRn.png)
 
