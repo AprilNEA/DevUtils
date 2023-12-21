@@ -6,6 +6,7 @@ import { Inconsolata } from 'next/font/google';
 import { Separator, Theme } from '@radix-ui/themes';
 import '@radix-ui/themes/styles.css';
 
+import Provider from '@/app/provider';
 import Sidebar from '@/components/sidebar';
 import '@/globals.css';
 
@@ -35,14 +36,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={clsx(inconsolata.className, 'h-full bg-[#f3f5f8]')}>
-        <Theme accentColor="gray" grayColor="slate">
-          <div className="h-screen flex flex-row">
-            <Sidebar />
-            <Separator orientation="vertical" size="4" />
-            <div className="grow p-4">{children}</div>
-          </div>
-        </Theme>
-        <Toaster />
+        <Provider>
+          <Theme accentColor="gray" grayColor="slate">
+            <div className="h-screen flex flex-row">
+              <Sidebar />
+              <Separator orientation="vertical" size="4" />
+              <div className="grow p-4">{children}</div>
+            </div>
+          </Theme>
+          <Toaster />
+        </Provider>
       </body>
     </html>
   );

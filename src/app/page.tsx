@@ -17,18 +17,20 @@ export default function Home() {
         </div>
         <div className="text-2xl">All-in-one Toolbox for Developers</div>
         <Grid columns="3" gap="4">
-          {Object.values(META_UTILS).map((utils) => {
+          {Object.entries(META_UTILS).map(([key, utils]) => {
             return (
-              <div
-                key={utils.name}
-                className={clsx(
-                  'flex flex-col justify-center items-center gap-4',
-                  'p-4 bg-white border shadow rounded-md',
-                )}
-              >
-                <utils.icon className="h-16 w-16" />
-                <p>{utils.name}</p>
-              </div>
+              <Link href={`/utils/${key}`} key={key}>
+                <div
+                  key={utils.name}
+                  className={clsx(
+                    'flex flex-col justify-center items-center gap-4',
+                    'p-4 bg-white border shadow rounded-md',
+                  )}
+                >
+                  <utils.icon className="h-16 w-16" />
+                  <p>{utils.name}</p>
+                </div>
+              </Link>
             );
           })}
         </Grid>
